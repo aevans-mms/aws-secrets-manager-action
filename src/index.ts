@@ -61,7 +61,7 @@ const getSecretValueMap = (secretsManagerClient: SecretsManager,
         }
         let secretValueMap = {}
 
-        secretNameMod = secretName.replace(/\/g, ".")
+        secretNameMod = secretName.replace(/\//g, ".")
 
         // If secretName = 'mySecret' and secretValue='{ "foo": "bar" }'
         // and if secretValue is a valid JSON object string and shouldParseJSON = true, 
@@ -117,7 +117,7 @@ const getSecretNamesToFetch = (secretsManagerClient: SecretsManager, inputSecret
       .then(secrets => {
         inputSecretNames.forEach(inputSecretName => {
           secretNames.push(...filterBy(secrets, inputSecretName))
-          core.log(`looking for secret: ${inputSecretName}`)
+          core.debug(`looking for secret: ${inputSecretName}`)
         })
         resolve([...new Set(secretNames)])
       })
