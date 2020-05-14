@@ -8,7 +8,7 @@ GitHub Action to fetch secrets from AWS Secrets Manager.
 ```yaml
 steps:
  - name: Read secrets from AWS Secrets Manager into environment variables
-   uses: action-factory/aws-secrets-manager-action@0.2.0
+   uses: action-factory/aws-secrets-manager-action@v0.2.0
    with:
     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -55,6 +55,7 @@ steps:
 
 #### Note:
 - `${{ secrets.YOUR_SECRET_NAME }}` refers to [GitHub Secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets). Create the required secrets (e.g.: AWS credentials) in your GitHub repository before using this GitHub Action.
+- The `aws_access_key_id`, `aws_secret_access_key` and `aws_region` are required for shared runners. For self-hosted runners, credentials are loaded following AWS SDK standard processes: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html
 
 ## Features
 - Can fetch secrets from AWS Secrets Manager and inject them into environment variables which can be used in subsequent steps in your workflow. 

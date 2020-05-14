@@ -63,19 +63,21 @@ const getSecretValueMap = (secretsManagerClient: SecretsManager,
         }
         let secretValueMap = {}
 
+        secretNameMod = secretName.replace(/\/g, ".")
+
         // If secretName = 'mySecret' and secretValue='{ "foo": "bar" }'
         // and if secretValue is a valid JSON object string and shouldParseJSON = true, 
         // injected secrets will be of the form 'mySecret.foo' = 'bar'
         if (isJSONObjectString(secretValue) && shouldParseJSON) {
           const secretJSON = JSON.parse(secretValue)
           const secretJSONWrapped = {}
-          secretJSONWrapped[secretName] = secretJSON
+          secretJSONWrapped[secretNameMod] = secretJSON
           const secretJSONFlattened = flattenJSONObject(secretJSONWrapped)
           secretValueMap = secretJSONFlattened
         }
         // Else, injected secrets will be of the form 'mySecret' = '{ "foo": "bar" }' (raw secret value string)
         else {
-          secretValueMap[secretName] = secretValue
+          secretValueMap[secretNameMod] = secretValue
         }
         resolve(secretValueMap)
       })
