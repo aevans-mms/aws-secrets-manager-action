@@ -63,6 +63,11 @@ const getSecretValueMap = (secretsManagerClient: SecretsManager,
         }
         let secretValueMap = {}
 
+        // If secretName contains slashes, it can't be read by the workflow
+        secretNameMod = secretName.replace(/\//g, ".")
+        secretName = secretNameMod
+        core.debug("${secretName} changed to ${secretNameMod});
+
         // If secretName = 'mySecret' and secretValue='{ "foo": "bar" }'
         // and if secretValue is a valid JSON object string and shouldParseJSON = true, 
         // injected secrets will be of the form 'mySecret.foo' = 'bar'
