@@ -131,7 +131,7 @@ const injectSecretValueMapToEnvironment = (secretValueMap: object, core): void =
     const secretValue = secretValueMap[secretName]
     core.setSecret(secretValue)
     // If secretName contains slashes dots or dashes, it can't be read by the shell
-    secretNameMod = secretName.replace(/[\/\.\-\\]/g, "_")
+    var secretNameMod = secretName.replace(/[\/\.\-\\]/g, "_")
     core.debug(`Injecting secret: ${secretName} = ${secretValue}`)
     core.exportVariable(secretName, secretValue)
     core.debug(`Injecting secret: ${secretNameMod} = ${secretValue}`)
