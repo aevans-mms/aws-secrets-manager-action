@@ -20,16 +20,16 @@ const listSecretsPaginated = (secretsManagerClient, nextToken): Promise<object> 
 
 const listSecrets = (secretsManagerClient: SecretsManager): Promise<Array<string>> => {
   return new Promise<Array<string>>((resolve, reject) => {
-    let nextToken: string = null
+    let nextToken: string = ""
     const allSecretNames: string[] = []
     do {
       listSecretsPaginated(secretsManagerClient, nextToken)
         .then(res => {
-          // fetch nextToken if it exists, reset to null otherwise
+          // fetch nextToken if it exists, reset to "" otherwise
           if ('NextToken' in res) {
             nextToken = res['NextToken']
           } else {
-            nextToken = null
+            nextToken = ""
           }
           // get all non-deleted secret names
           res['SecretList'].forEach(secret => {
